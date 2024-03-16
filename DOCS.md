@@ -138,8 +138,4 @@ Sanctum is a token authentication scheme for APIs and SPAs
 -   [ ] The above basic token has all the abilities as we had not defined any specific ability for it. This is a default behaviour. Make sure to assign abilities to all tokens and protect your routes against the mutable ones
 
 Laravel Community:
-laravel.io
-
-```
-
-```
+https://laravel.io
