@@ -2,7 +2,7 @@
 
 ## This was installed using Docker:
 
-### To run it with Docker:
+### To create a new project with Docker:
 
 `curl -s "https://laravel.build/example-app" | bash`
 
