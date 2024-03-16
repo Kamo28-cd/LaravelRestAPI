@@ -8,7 +8,8 @@
 
 ### After its been created:
 
-```cd example-app
+```
+cd example-app
 ./vendor/bin/sail up
 ```
 
@@ -22,7 +23,8 @@ If you migration fails due, it may be due to environment variable issues
 
 ### You may need to change the following:
 
-```DB_HOST=0.0.0.0
+```
+DB_HOST=0.0.0.0
 DB_PASSWORD=password
 ```
 
@@ -31,7 +33,8 @@ Create Laravel Project:
 
 Run the app:
 
-```cd example-app
+```
+cd example-app
 php artisan serve
 ```
 
