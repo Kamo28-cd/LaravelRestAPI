@@ -9,12 +9,12 @@
 ### After its been created:
 
 ```cd example-app
-
-./vendor/bin/sail up```
+./vendor/bin/sail up
+```
 
 Once that's done and you docker containers are running then:
 
-```./vendor/bin/sail artisan migrate```
+`./vendor/bin/sail artisan migrate`
 
 Seed docs: https://laravel.com/docs/11.x#sail-on-macos
 
@@ -22,7 +22,7 @@ If you migration fails due, it may be due to environment variable issues
 
 ### You may need to change the following:
 
-```DB_HOST=0.0.0.0
+````DB_HOST=0.0.0.0
 DB_PASSWORD=password```
 
 Create Laravel Project:
@@ -31,10 +31,8 @@ Create Laravel Project:
 Run the app:
 
 ```cd example-app
-
-php artisan serve```
-
-
+php artisan serve
+```
 
 
 For reference go to laravel-api repo on GitHub or on local machine
@@ -42,10 +40,10 @@ Also look at this course for reference : https://www.youtube.com/watch?v=YGqCZjd
 
 
 To run development server:
-Php artisan serve
+```php artisan serve```
 
 If no api.php file found in the route folder:
-php artisan install:api
+```php artisan install:api```
 
 
 ## Creating database:
@@ -59,29 +57,32 @@ php artisan install:api
 - [ ] Then go to database/seeders and in the relevant seeder you can add the specific number of data that you want under the specific seeder. Seeders that depend on another seeder (in this case Invoice /Movies depends on Customers/Director as one can’t be present without the other) you can create in just the Parent seeder (Customer/Director)
 - [ ] Then add the relevant seeder in the database/seeders/DatabaseSeeder.php
 ### From here you can run the migration:
-php artisan migrate:fresh --seed
+```php artisan migrate:fresh --seed```
 Or just
-php artisan migrate
+```php artisan migrate```
 
 
 Laravel gives you resources to transform your response to an Eloquent json model. This will allow you to manipulate your returned data in a readable JSON way and also filter the data you get back accordingly by omitting what you don’t need.
-You can make your resource by:
-php artisan make:resource CustomerResource (where CustomerResource is the name of your resource)
+You can make your resource by (where CustomerResource is the name of your resource):
+```php artisan make:resource CustomerResource ```
+
 If you will version this then you will instead say:
-php artisan make:resource V1/CustomerResource
+
+```php artisan make:resource V1/CustomerResource```
 
 
 ## To make a new request (POST):
 First note that Laravel 11 already creates the StoreRequest for you and you just need to place it into the correct folder (V1 if you want to version it then change the namespace to include the correct folder)
-- [ ] php artisan make:request V1/StoreCustomerRequest (if versioned, if not versioned then its php artisan make:request StoreCustomerRequest)
-- [ ] Then you need to go to your model (Models/Customer.php) and add all the items that you want to be fillable inside a fillable array
-- [ ] And go to your controller (Controllers/Api/V1), and inside the store method you want to add a return so that it returns what you need according to your resource
-- [ ] Inside your requests (Requests/V1/StoreCustomerRequests) you want to either change authorise to be true if you want only authorised users to do a specific action or keep it as false.
-- [ ] Then under the rules (in Requests/V1/StoreCustomerRequests) you want to specify your validation rules
+- [ ] `php artisan make:request V1/StoreCustomerRequest` (if versioned, if not versioned then its php artisan make:request StoreCustomerRequest)
+- [ ] Then you need to go to your model (`Models/Customer.php`) and add all the items that you want to be fillable inside a fillable array
+- [ ] And go to your controller (`Controllers/Api/V1`), and inside the store method you want to add a return so that it returns what you need according to your resource
+- [ ] Inside your requests (`Requests/V1/StoreCustomerRequests`) you want to either change authorise to be true if you want only authorised users to do a specific action or keep it as false.
+- [ ] Then under the rules (in `Requests/V1/StoreCustomerRequests`) you want to specify your validation rules
 
 ### To make PUT or PATCH request:
 PUT- will update all the items in an object
-PATCH- will update only the ones you provide it, for example if you provide ‘name: John’, only it will be in the following object {name: Jake, surname: Riddle, phone: 1234} will be updated
+PATCH- will update only the ones you provide it, for example if you provide ‘name: John’, only it will be in the following object will be updated
+```{name: Jake, surname: Riddle, phone: 1234} ```
 
 Same as above, Laravel 11 does this for you, you just need to place it into the correct version folder. But if you need a new one:
 - [ ] php artisan make:request V1/UpdateCustomerRequest (if versioned, if not versioned then its php artisan make:request UpdateCustomerRequest)
@@ -90,12 +91,12 @@ Same as above, Laravel 11 does this for you, you just need to place it into the 
 
 ### To make Bulk insert (store many things at once):
 - [ ] You need to add your on bulkStore method in your controller. Consider bulkStore in the Invoice Controller
-- [ ] Add your own route inside ‘routes/api.php’, use a post (remember apiRoutes don’t have this new route method bulkStore defined in it) method for it
-- [ ] Specify where to route that request ie uses => ‘InvoicesController@bulkStore’
-- [ ] Then create your own versioned or un-versioned Store request: ‘Requests/V1/BulkStoreInvoiceRequest’
+- [ ] Add your own route inside ‘`routes/api.php`’, use a post (remember apiRoutes don’t have this new route method bulkStore defined in it) method for it
+- [ ] Specify where to route that request ie uses => ‘`InvoicesController@bulkStore`’
+- [ ] Then create your own versioned or un-versioned Store request: ‘`Requests/V1/BulkStoreInvoiceRequest`’
 - [ ] And ensure that your rules meet the correct data structure. In this case we are validating an array of objects
-- [ ] Then inside our prepareForValidation method inside the ‘Requests/V1/BulkStoreInvoiceRequest’ class we want to ensure that the camelCase keys are all accounted for and switched out to the relevant proper table names
-- [ ] Then inside our bulkStore method in our ‘Controllers/Api/V1/InvoiceController’ we want to ensure that whatever data we want to store don’t have any camelCase keys for tables inside the arrays. So we remove the arrays that may have data like that and then change it into an array and insert it into the Invoice table
+- [ ] Then inside our prepareForValidation method inside the ‘`Requests/V1/BulkStoreInvoiceRequest`’ class we want to ensure that the camelCase keys are all accounted for and switched out to the relevant proper table names
+- [ ] Then inside our bulkStore method in our ‘`Controllers/Api/V1/InvoiceController`’ we want to ensure that whatever data we want to store don’t have any camelCase keys for tables inside the arrays. So we remove the arrays that may have data like that and then change it into an array and insert it into the Invoice table
 
 ### Authentication - To protect routes with Sanctum:
 Sanctum is a token authentication scheme for APIs and SPAs
@@ -119,14 +120,15 @@ API Keys:
 
 To add authorisation to your requests after getting api keys:
 
--   [ ] Open your Requests/V1/StoreCustomerRequest file
+-   [ ] Open your `Requests/V1/StoreCustomerRequest` file
 -   [ ] Under ‘authorize’ check if you have a user
--   [ ] If you do check if the user’s token can ‘create’ with the tokenCan(‘create’) method
+-   [ ] If you do check if the user’s token can ‘create’ with the `tokenCan(‘create’)` method
 -   [ ] For updating it should be tokenCan(‘update’) likewise for deleting as long as you have those methods defined
--   [ ] If you want to go even further to have only certain people create certain things you can allow your tokens to be more specific like tokenCan(‘customer:update’) or tokenCan(‘invoice:create’)
+-   [ ] If you want to go even further to have only certain people create certain things you can allow your tokens to be more specific like `tokenCan(‘customer:update’)` or `tokenCan(‘invoice:create’)`
 -   [ ] The above basic token has all the abilities as we had not defined any specific ability for it. This is a default behaviour. Make sure to assign abilities to all tokens and protect your routes against the mutable ones
 
 Laravel Community:
 laravel.io
 
 
+````
