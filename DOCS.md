@@ -1,5 +1,17 @@
 # Laravel Project Docs
 
+## Running the app:
+
+```
+php artisan serve
+```
+
+## Running the containers:
+
+```
+./vendor/bin/sail up
+```
+
 ## This was installed using Docker:
 
 ### To create a new project with Docker:
